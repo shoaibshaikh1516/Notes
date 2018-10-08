@@ -20,6 +20,6 @@ public class NotesUserDetailsService implements UserDetailsService {
         Optional<User> optionalUser=userRepository.findByemailaddress(username);
         optionalUser.orElseThrow(()->new UsernameNotFoundException("User Not found!!"));
 
-        return optionalUser.map(user-> new NotesUserDetails(user)).get();
+        return optionalUser.map(NotesUserDetails::new).get();
     }
 }
