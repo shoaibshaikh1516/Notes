@@ -29,10 +29,6 @@ public class User implements Serializable {
 	@JoinColumn(name = "userroleid")
 	private UserRole userrole;
 
-//	@OneToMany(mappedBy = "user")
-//	private List<UserPhone> phones;
-//
-
 	public User() {
 	}
 
@@ -51,7 +47,7 @@ public class User implements Serializable {
 	}
 
 	public int getUserid() {
-		return this.userid;
+		return userid;
 	}
 
 	public void setUserid(int userid) {
@@ -67,15 +63,15 @@ public class User implements Serializable {
 	}
 
 	public String getFirstname() {
-		return this.firstname;
+		return firstname;
 	}
 
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
 
-	public boolean getIsactive() {
-		return this.isactive;
+	public boolean isIsactive() {
+		return isactive;
 	}
 
 	public void setIsactive(boolean isactive) {
@@ -83,19 +79,15 @@ public class User implements Serializable {
 	}
 
 	public String getLastname() {
-		return this.lastname;
+		return lastname;
 	}
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
 
-	public String getPasswordString() {
-		return new String(this.password);
-	}
-
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	public void setPassword(String password) {
@@ -109,26 +101,4 @@ public class User implements Serializable {
 	public void setUserrole(UserRole userrole) {
 		this.userrole = userrole;
 	}
-
-//	public List<UserPhone> getPhones() {
-//		return this.phones;
-//	}
-//
-//	public void setPhones(List<UserPhone> phones) {
-//		this.phones = phones;
-//	}
-
-//	public UserPhone addPhone(UserPhone phone) {
-//		getPhones().add(phone);
-//		phone.setUser(this);
-//
-//		return phone;
-//	}
-//	public UserPhone removePhone(UserPhone phone) {
-//		getPhones().remove(phone);
-//		phone.setUser(null);
-//
-//		return phone;
-//	}
-
 }
