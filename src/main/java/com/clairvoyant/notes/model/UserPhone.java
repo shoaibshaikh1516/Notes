@@ -21,8 +21,8 @@ public class UserPhone implements Serializable {
 	private String phonenumber;
 
 	@ManyToOne
-	@JoinColumn(name = "userid")
-	private User user;
+	@JoinColumn(name = "user_id")
+	private Users user;
 
 	public UserPhone() {
 	}
@@ -51,13 +51,16 @@ public class UserPhone implements Serializable {
 		this.phonenumber = phonenumber;
 	}
 
-	public User getUser() {
-		return this.user;
+
+	public boolean isIsprimary() {
+		return isprimary;
 	}
 
-	public void setUser(User user) {
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
 		this.user = user;
 	}
-
-
 }

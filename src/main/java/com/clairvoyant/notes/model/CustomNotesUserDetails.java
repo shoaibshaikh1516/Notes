@@ -1,19 +1,25 @@
 package com.clairvoyant.notes.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
-public class NotesUserDetails extends User implements UserDetails {
+public class CustomNotesUserDetails extends Users implements UserDetails {
 
-    public NotesUserDetails(final User user){
-        super(user);
+    public CustomNotesUserDetails(final Users users) {
+        super(users);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        return getRoles()
+                .stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -23,17 +29,12 @@ public class NotesUserDetails extends User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return super.getEmailaddress();
+        return super.getEmail();
     }
-
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
 
     @Override
     public boolean isAccountNonExpired() {
-        return super.isIsactive();
+        return true;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.clairvoyant.notes.resource;
 
 
-import com.clairvoyant.notes.model.User;
-import com.clairvoyant.notes.repo.UserRepository;
+import com.clairvoyant.notes.model.Users;
+import com.clairvoyant.notes.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +14,12 @@ import java.util.List;
 public class UserDetails {
 
     @Autowired
-    private UserRepository userRepository;
+    private UsersRepository userRepository;
 
     @RequestMapping("/user/{userid}")
-    public List<User> getNotesInfo(@PathVariable Integer userid) throws Exception {
+    public List<Users> getNotesInfo(@PathVariable Integer userid) throws Exception {
 
-        List<User> all = userRepository.findAll();
+        List<Users> all = userRepository.findAll();
         return all;
 
     }
