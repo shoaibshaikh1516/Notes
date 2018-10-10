@@ -11,7 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/secured", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class HomeController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class HomeController {
         return allNotes;
     }
 
-    @RequestMapping("/note/{noteid}/user/{userid}")
+    @RequestMapping("/secured/note/{noteid}/user/{userid}")
     public Note getNotesInfo(@PathVariable Integer noteid,@PathVariable Integer userid) throws Exception {
         Note allNotes = notesRepository.findByNoteidAndUserid(noteid,userid);
         return allNotes;
