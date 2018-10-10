@@ -21,10 +21,9 @@ public class CustomNotesUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Users> optionalUsers = usersRepository.findByEmail(username);
-
-        optionalUsers
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        optionalUsers.orElseThrow(() -> new UsernameNotFoundException("Username not found"));
         return optionalUsers
-                .map(CustomNotesUserDetails::new).get();
+                .map(CustomNotesUserDetails::new).orElseThrow(() -> new UsernameNotFoundException("Username/Email not found in" +
+                        "database for " + username));
     }
 }
