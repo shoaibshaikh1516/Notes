@@ -2,8 +2,6 @@ package com.clairvoyant.notes.model.token;
 
 public class JwtAuthenticationToken  {
 
-
-
 	private String token;
 	private String tokenType;
 	private Long expiryDuration;
