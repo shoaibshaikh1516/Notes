@@ -6,7 +6,6 @@ public class Util {
     public static final String SUCCESS = "SUCCESS";
 
     private Util() {
-
     }
 
 
