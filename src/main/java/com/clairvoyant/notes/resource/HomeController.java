@@ -6,9 +6,13 @@ import com.clairvoyant.notes.repo.NotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalTime;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,4 +49,28 @@ public class HomeController {
     public void deleteStudent(@PathVariable int noteid) {
         notesRepository.delete(noteid);
     }
+
+
+        @RequestMapping("/test/sseTest")
+        public SseEmitter handleRequest () {
+
+            final SseEmitter emitter = new SseEmitter();
+            ExecutorService service = Executors.newSingleThreadExecutor();
+            service.execute(() -> {
+                for (int i = 0; i < 500; i++) {
+                    try {
+                        emitter.send(LocalTime.now().toString() , MediaType.TEXT_PLAIN);
+
+                        Thread.sleep(200);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        emitter.completeWithError(e);
+                        return;
+                    }
+                }
+                emitter.complete();
+            });
+
+            return emitter;
+        }
 }
