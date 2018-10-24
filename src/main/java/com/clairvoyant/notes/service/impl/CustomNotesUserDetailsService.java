@@ -17,7 +17,6 @@ public class CustomNotesUserDetailsService implements UserDetailsService {
     @Autowired
     private UsersRepository usersRepository;
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Users> optionalUsers = usersRepository.findByEmail(username);
