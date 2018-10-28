@@ -28,6 +28,28 @@ public class HomeController {
         Note allNotes = notesRepository.findOne(noteid);
         return allNotes;
     }
+    @CrossOrigin(origins = "http://localhost:3000")
+        @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/note/update/{noteid}")
+    public void updateNote(@RequestBody Note notes,String noteid, UriComponentsBuilder ucBuilder) throws Exception {
+
+        Note save = notesRepository.save(notes);
+        System.out.println(ucBuilder.toString());
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/note/delete/{noteid}")
+    public void deleteStudent(@PathVariable int noteid) {
+        notesRepository.delete(noteid);
+        //TODO :org.springframework.dao.EmptyResultDataAccessException: No class com.clairvoyant.notes.model.Note entity with id 6 exists!
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/note/add")
+    public Note addNote(@RequestBody Note notes, UriComponentsBuilder ucBuilder) throws Exception {
+        Note save = notesRepository.save(notes);
+        System.out.println(ucBuilder.toString());
+
+        return save;
+    }
 
     @RequestMapping("/secured/note/{noteid}/user/{userid}")
     public Note getNotesInfo(@PathVariable Integer noteid,@PathVariable Integer userid) throws Exception {
@@ -35,14 +57,4 @@ public class HomeController {
         return allNotes;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/notes")
-    public void addNote(@RequestBody Note notes, UriComponentsBuilder ucBuilder) throws Exception {
-        Note save = notesRepository.save(notes);
-        System.out.println(ucBuilder.toString());
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/note/{noteid}")
-    public void deleteStudent(@PathVariable int noteid) {
-        notesRepository.delete(noteid);
-    }
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
@@ -53,9 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint);
 
-        http.authorizeRequests().antMatchers("/auth/login").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "**/secured/**").permitAll().anyRequest().authenticated().and()
-                .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class);
+//        http.authorizeRequests().antMatchers("/auth/login").permitAll()
+//                .antMatchers("/api/**").permitAll()
+//                .antMatchers(HttpMethod.OPTIONS, "**/secured/**").permitAll().anyRequest().authenticated().and()
+//                .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class);
      }
 
     private PasswordEncoder getPasswordEncoder() {
@@ -71,7 +70,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             }
         };
     }
-
-
 
 }

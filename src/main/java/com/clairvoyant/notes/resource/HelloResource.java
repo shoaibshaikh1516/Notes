@@ -1,12 +1,10 @@
 package com.clairvoyant.notes.resource;
 
 
-import com.clairvoyant.notes.model.Note;
 import com.clairvoyant.notes.repo.NotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,10 +29,10 @@ public class HelloResource {
 
     //Copy of method in HomeController
 //    @RequestMapping("/secured/note/{noteid}/user/{userid}")
-    public Note getNotesInfo(@PathVariable Integer noteid, @PathVariable Integer userid) throws Exception {
-        Note allNotes = notesRepository.findByNoteidAndUserid(noteid,userid);
-        return allNotes;
-    }
+//    public Note getNotesInfo(@PathVariable Integer noteid, @PathVariable Integer userid) throws Exception {
+//        Note allNotes = notesRepository.findByNoteidAndUserid(noteid,userid);
+//        return allNotes;
+//    }
 
     @GetMapping("/secured/alternate")
     public String alternate() {
