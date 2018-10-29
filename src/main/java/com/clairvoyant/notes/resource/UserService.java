@@ -1,9 +1,12 @@
 package com.clairvoyant.notes.resource;
 
 
+import com.clairvoyant.notes.Exception.Model.NotesAlreadyPresentException;
 import com.clairvoyant.notes.VO.UserVO;
+import com.clairvoyant.notes.model.UserRole;
 import com.clairvoyant.notes.model.Users;
 import com.clairvoyant.notes.repo.RoleRepository;
+import com.clairvoyant.notes.repo.UserRoleRepository;
 import com.clairvoyant.notes.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,6 +23,8 @@ public class UserService {
     private UsersRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @RequestMapping("/users")
     public List<Users> getNotesInfo(@PathVariable Integer userid) throws Exception {
@@ -29,12 +34,12 @@ public class UserService {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/user/add")
     public Users addUser(@RequestBody UserVO userVO) throws Exception {
-
-
          Optional<Users> byEmail = userRepository.findByEmail(userVO.getEmail());
 
-
-
+         if(byEmail.isPresent())
+         {
+             throw new NotesAlreadyPresentException("Email Id Already Present");
+         }
 
         Users user = new Users();
         user.setEmail(userVO.getEmail());
@@ -46,6 +51,11 @@ public class UserService {
         if (userVO.getPassword().equals(userVO.getPasswordConfirmation())) {
             user.setPassword(userVO.getPassword());
             savedUser = userRepository.save(user);
+
+            UserRole userRole= new UserRole();
+            userRole.setRoleId(userVO.getRole());
+            userRole.setUserId(savedUser.getId());
+            userRoleRepository.save(userRole);
         }
 
         return savedUser;

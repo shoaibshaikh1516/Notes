@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:remove="all">Clairvoyant Soft </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"></script>
+
+
+</head>
+<body>
+
+<div class="container">
+    <h2 th:text="${title}">Reminder</h2>
+    <div class="card">
+        <div th:text="${header}" class="card-header">Header</div>
+        <div th:text="${content}" class="card-body">Content </div>
+        <div th:text="${footer}" class="card-footer">Footer</div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
