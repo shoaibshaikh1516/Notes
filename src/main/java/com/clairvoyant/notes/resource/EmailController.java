@@ -19,8 +19,8 @@ public class EmailController {
 
         Context context = new Context();
         context.setVariable("title", "Gentle Remainder");
-        context.setVariable("header", "Header");
-        context.setVariable("content", "Content");
+        context.setVariable("header", "PDC");
+        context.setVariable("content", "Date:`2017/10/30`");
         context.setVariable("footer", "Footer");
         EmailStatus emailStatus = emailHtmlSender.send("shoaib16shaikh@gmail.com", "Title of email", "/TShoaib", context);
 
