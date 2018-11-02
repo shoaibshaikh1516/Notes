@@ -1,6 +1,7 @@
 package com.clairvoyant.notes.resource;
 
 
+import com.clairvoyant.notes.Exception.NotesEmptyResultDataAccessException;
 import com.clairvoyant.notes.model.Note;
 import com.clairvoyant.notes.repo.NotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,10 @@ public class HomeController {
         Note allNotes = notesRepository.findOne(noteid);
         return allNotes;
     }
+
     @CrossOrigin(origins = "http://localhost:3000")
-        @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/note/update/{noteid}")
-    public void updateNote(@RequestBody Note notes,String noteid, UriComponentsBuilder ucBuilder) throws Exception {
+    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/note/update/{noteid}")
+    public void updateNote(@RequestBody Note notes, String noteid, UriComponentsBuilder ucBuilder) throws Exception {
 
         Note save = notesRepository.save(notes);
         System.out.println(ucBuilder.toString());
@@ -47,13 +49,15 @@ public class HomeController {
     public Note addNote(@RequestBody Note notes, UriComponentsBuilder ucBuilder) throws Exception {
         Note save = notesRepository.save(notes);
         System.out.println(ucBuilder.toString());
-
+        if (save == null) {
+            throw new NotesEmptyResultDataAccessException("Not Found");
+        }
         return save;
     }
 
     @RequestMapping("/secured/note/{noteid}/user/{userid}")
-    public Note getNotesInfo(@PathVariable Integer noteid,@PathVariable Integer userid) throws Exception {
-        Note allNotes = notesRepository.findByNoteidAndUserid(noteid,userid);
+    public Note getNotesInfo(@PathVariable Integer noteid, @PathVariable Integer userid) throws Exception {
+        Note allNotes = notesRepository.findByNoteidAndUserid(noteid, userid);
         return allNotes;
     }
 

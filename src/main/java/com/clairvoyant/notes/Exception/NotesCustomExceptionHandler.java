@@ -5,6 +5,7 @@ import com.clairvoyant.notes.Exception.Model.NotesResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -42,7 +43,7 @@ public class NotesCustomExceptionHandler {
         return exceptionResponse;
     }
 
-    @ExceptionHandler({NotesNotFoundException.class, NotesConflictException.class})
+    @ExceptionHandler({NotesNotFoundException.class, NotesConflictException.class,EmptyResultDataAccessException.class})
     @ResponseBody
     public Object handleNotFound(HttpServletRequest request, Exception ex) throws Exception {
         throw ex;
