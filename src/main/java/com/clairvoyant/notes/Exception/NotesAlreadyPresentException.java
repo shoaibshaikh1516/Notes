@@ -1,4 +1,4 @@
-package com.clairvoyant.notes.Exception.Model;
+package com.clairvoyant.notes.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

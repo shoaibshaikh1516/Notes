@@ -4,7 +4,6 @@ import com.clairvoyant.notes.Exception.Model.Message;
 import com.clairvoyant.notes.Exception.Model.NotesResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -26,23 +25,12 @@ public class NotesCustomExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseBody
     public Message handleCredentialsException(HttpServletRequest request, Exception ex) {
-        logger.error(ex.getMessage(), ex);
+        logger.error(ex.getMessage(),request);
 
         Message message = new Message(ex.getMessage(), new Date(), "Invalid Username/Password");
-
         return message;
     }
-
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY, reason = "Email ID Already Exists")
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseBody
-    public Object handleEmailIdAlreadyExistsException(HttpServletRequest request, Exception ex) {
-        logger.error(ex.getMessage(), ex);
-        NotesResponse exceptionResponse = new NotesResponse(ex.getMessage());
-        return exceptionResponse;
-    }
-
-    @ExceptionHandler({NotesNotFoundException.class, NotesConflictException.class})
+    @ExceptionHandler({NotesNotFoundException.class, NotesConflictException.class,NotesAlreadyPresentException.class})
     @ResponseBody
     public Object handleNotFound(HttpServletRequest request, Exception ex) throws Exception {
         throw ex;

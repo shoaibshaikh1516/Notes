@@ -1,7 +1,7 @@
 package com.clairvoyant.notes.resource;
 
 
-import com.clairvoyant.notes.Exception.Model.NotesAlreadyPresentException;
+import com.clairvoyant.notes.Exception.NotesAlreadyPresentException;
 import com.clairvoyant.notes.VO.UserVO;
 import com.clairvoyant.notes.model.UserRole;
 import com.clairvoyant.notes.model.Users;

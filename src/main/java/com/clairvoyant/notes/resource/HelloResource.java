@@ -27,12 +27,6 @@ public class HelloResource {
     }
 
 
-    //Copy of method in HomeController
-//    @RequestMapping("/secured/note/{noteid}/user/{userid}")
-//    public Note getNotesInfo(@PathVariable Integer noteid, @PathVariable Integer userid) throws Exception {
-//        Note allNotes = notesRepository.findByNoteidAndUserid(noteid,userid);
-//        return allNotes;
-//    }
 
     @GetMapping("/secured/alternate")
     public String alternate() {
