@@ -1,11 +1,33 @@
 package com.clairvoyant.notes.VO;
 
+import com.clairvoyant.notes.service.impl.ValidPassword;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class UserVO {
+
+    @NotNull
+    @Size(min = 1, message = "Name should have atleast 1 characters ")
     private String name;
+    @NotNull
+    @Size(min = 1, message = "Last name should have atleast 1 characters ")
     private String lastName;
+
+
+    @NotNull
+    @NotEmpty
+    @Email
     private String email;
+    @NotNull
+    @ValidPassword
     private String password;
+    @NotNull
+    @ValidPassword
     private String passwordConfirmation;
+    @NotNull
     private Integer role;
 
     public String getName() {
