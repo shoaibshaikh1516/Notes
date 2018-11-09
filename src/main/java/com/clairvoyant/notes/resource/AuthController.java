@@ -1,6 +1,5 @@
 package com.clairvoyant.notes.resource;
 
-import com.clairvoyant.notes.model.CustomNotesUserDetails;
 import com.clairvoyant.notes.model.payload.LoginRequest;
 import com.clairvoyant.notes.model.token.JwtAuthenticationToken;
 import com.clairvoyant.notes.security.JwtTokenProvider;
@@ -16,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,9 +50,9 @@ public class AuthController {
 		if (authentication.isAuthenticated()) {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 
-			CustomNotesUserDetails customNotesUserDetails = (CustomNotesUserDetails) authentication.getPrincipal();
-			String token = jwtTokenProvider.generateToken(customNotesUserDetails);
-
+			// token creation
+			User user = (User) authentication.getPrincipal();
+			String token = jwtTokenProvider.generateToken(user);
 			// Return the token
 			response.addHeader("Authorization", "Bearer " + token);
 			logger.debug("Login Successful");
