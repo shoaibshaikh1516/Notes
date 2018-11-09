@@ -1,5 +1,6 @@
 package com.clairvoyant.notes.security;
 
+import com.clairvoyant.notes.model.CustomNotesUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -47,7 +48,12 @@ public class JwtTokenProvider {
         return new Date(expireInMilis + now.getTime());
     }
 
-
+    public String generateToken(CustomNotesUserDetails customNotesUserDetails) {
+        Date now = new Date();
+        return Jwts.builder().setId(UUID.randomUUID().toString()).setSubject(customNotesUserDetails.getUsername())
+                .setIssuedAt(now).setExpiration(getExpirationTime())
+                .signWith(SignatureAlgorithm.HS512, this.encodedSecret).compact();
+    }
 
 
     public UsernamePasswordAuthenticationToken getUser(String token) {

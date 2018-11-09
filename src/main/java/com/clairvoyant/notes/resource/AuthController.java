@@ -1,5 +1,6 @@
 package com.clairvoyant.notes.resource;
 
+import com.clairvoyant.notes.model.CustomNotesUserDetails;
 import com.clairvoyant.notes.model.payload.LoginRequest;
 import com.clairvoyant.notes.model.token.JwtAuthenticationToken;
 import com.clairvoyant.notes.security.JwtTokenProvider;
@@ -50,9 +51,10 @@ public class AuthController {
 		if (authentication.isAuthenticated()) {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 
-			// token creation
-			User user = (User) authentication.getPrincipal();
-			String token = jwtTokenProvider.generateToken(user);
+
+			CustomNotesUserDetails customNotesUserDetails = (CustomNotesUserDetails) authentication.getPrincipal();
+			String token = jwtTokenProvider.generateToken(customNotesUserDetails);
+
 			// Return the token
 			response.addHeader("Authorization", "Bearer " + token);
 			logger.debug("Login Successful");
