@@ -11,6 +11,7 @@ import com.clairvoyant.notes.repo.UserRoleRepository;
 import com.clairvoyant.notes.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -49,9 +50,9 @@ public class UserService {
         user.setActive(1);
         Users savedUser = null;
         if (userVO.getPassword().equals(userVO.getPasswordConfirmation())) {
-            user.setPassword(userVO.getPassword());
+            String encryptedPassword = BCrypt.hashpw(userVO.getPassword(), BCrypt.gensalt());
+            user.setPassword(encryptedPassword);
             savedUser = userRepository.save(user);
-
             UserRole userRole= new UserRole();
             userRole.setRoleId(userVO.getRole());
             userRole.setUserId(savedUser.getId());
@@ -61,5 +62,4 @@ public class UserService {
         }
         return savedUser;
     }
-
 }
